@@ -84,7 +84,7 @@ var startMarkdownServer = function(options) {
           // close the server after we're done, print mode we won't keep the server open
           // this could be configurable if we wanted to, but my thought was that
           // when you're deciding to print, you just want the output pdf file
-          server.close();
+          process.exit();
       });
     } else {
       console.log('Reveal-server started, opening at http://' + opts.host + ':' + opts.port);
