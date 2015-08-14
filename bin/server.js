@@ -8,7 +8,9 @@ var path = require('path'),
     Mustache = require('mustache'),
     glob = require('glob'),
     md = require('../node_modules/reveal.js/plugin/markdown/markdown'),
-    exec = require('child_process').exec;
+    exec = require('child_process').exec,
+    tinylr = require('tiny-lr'),
+    bodyParser = require('body-parser');
 
 var app = express();
 var staticDir = express.static;
@@ -30,6 +32,9 @@ var opts = {
 };
 
 var printPluginPath = serverBasePath + '/node_modules/reveal.js/plugin/print-pdf/print-pdf.js';
+
+app.use(bodyParser.json());
+app.use(tinylr.middleware({ app: app }));
 
 ['css', 'js', 'images', 'plugin', 'lib'].forEach(function(dir) {
   app.use('/' + dir, staticDir(opts.revealBasePath + dir));

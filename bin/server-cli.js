@@ -4,6 +4,8 @@ var fs = require('fs'),
     path = require('path'),
     glob = require('glob'),
     program = require('commander'),
+    tinylr = require('tiny-lr'),
+    watch = require('node-watch'),
     server = require('./server'),
     pkg = require('../package.json');
 
@@ -87,6 +89,10 @@ if (fs.existsSync(manifestPath) && fs.statSync(manifestPath).isFile(manifestPath
 if (!program.theme && revealOptions.theme) {
   theme = revealOptions.theme;
 }
+
+watch(basePath, function(filename) {
+  tinylr.changed(path.relative(basePath, filename));
+});
 
 server.start({
   basePath: basePath,
